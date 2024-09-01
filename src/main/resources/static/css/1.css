@@ -1,0 +1,71 @@
+body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .chart2 {
+        width: 80%;
+        max-width: 800px;
+        background-color: #f5f5f5;
+        border-radius: 0px;
+        padding: 33px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+
+    }
+
+    .carousel {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+         .chart3 {
+            flex: 1;
+            background-color: black;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+    .slide {
+        scroll-snap-align: start;
+        flex: 0 0 auto;
+        min-width: 100%;
+        padding: 20px;
+        transition: transform 0.5s ease;
+        background: linear-gradient(to right, #ffffff, #f0f0f0);
+        border-radius: 8px;
+        margin-right: 10px;
+    }
+
+    .slide h3 {
+        margin-top: 0;
+    }
+
+    .slide p {
+        margin-bottom: 0;
+    }
+
+    .chart::-webkit-scrollbar {
+        display: none;
+    }
+
+
+
+  .xc{
+  width: 200px;
+  margin: 0 auto;
+  }
+  #tp-weather-widget,
+  #date-time-container,
+  #date-time-container p {
+    display: inline-block;
+    margin-right: 10px;
+

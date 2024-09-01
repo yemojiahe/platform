@@ -1,0 +1,205 @@
+/* 全局样式 */
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  background-color: #f0f2f5;
+}
+
+/* 左侧布局 */
+.left_layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 20%;
+  max-width: 1000px;
+  min-height: 100vh;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 0 10px;
+  border-right: 1px solid #e6e6e6;
+}
+
+/* 右侧布局 */
+.right_layout {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 80%;
+  min-height: 100vh;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 0 10px;
+}
+
+/* 图标样式 */
+
+
+.son_icon_hideen {
+  display: none;
+}
+
+/* 新聊天窗口样式 */
+.new_chat {
+  border: 1px solid #e6e6e6;
+  padding: 15px;
+  margin: 20px;
+  text-align: left;
+}
+
+.new_chat_text {
+  border: 1px solid #d9f7e9;
+  background-color: #f0f8ff;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+/* 左侧个人信息样式 */
+.left_person {
+  padding: 15px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #e6e6e6;
+  background-color: #fff;
+}
+
+.false_img {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(-135deg, #0000cc, #009dff);
+  border: 1px solid #add8e6;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+/* 右侧布局子元素样式 */
+.right_layout_son {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.right_layout_son_ipt {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #fff;
+  border-top: 1px solid #e6e6e6;
+}
+
+
+.btn {
+  border: none;
+  padding: 10px 15px;
+  background-color: #007bff;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.ipt {
+  flex: 1;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+}
+
+.right_layout_myselfChat {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+/* 其他样式调整 */
+.message {
+  background-color: #f0f8ff;
+  color: #333;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+.bot_message {
+  background-color: #e6f7ff;
+  align-self: flex-start;
+}
+
+
+
+
+
+
+/* 聊天框容器样式 */
+#chat-container {
+  width: 100%;
+  height: auto; /* 根据需要调整高度 */
+  border: 1px solid #ccc;
+  overflow-y: auto; /* 当消息超出容器高度时，显示滚动条 */
+  padding: 10px;
+}
+
+/* 用户消息和机器人消息的共同样式 */
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 单个消息样式 */
+.my_message, .bot_message {
+  max-width: 70%; /* 消息最大宽度 */
+  padding: 8px;
+  margin: 5px;
+  border-radius: 10px;
+  color: white;
+  word-wrap: break-word;
+}
+
+/* 用户消息样式 */
+.my_message {
+  background-color: #007bff; /* 用户消息背景颜色 */
+  align-self: flex-end; /* 将用户消息靠右显示 */
+}
+
+
+
+
+  .xc{
+  width: 200px;
+  margin: 0 auto;
+  }
+  #tp-weather-widget,
+  #date-time-container,
+  #date-time-container p {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+  /* 确保这些样式与你现有的样式表进行整合 */
+
+
+
+
+
