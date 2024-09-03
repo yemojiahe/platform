@@ -17,6 +17,15 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
+//        String requestURI = request.getRequestURI();
+//        if (requestURI.startsWith("/login")) {
+//            System.out.println("Skipping JWT filter for /login request");
+//            chain.doFilter(request, response); // Skip JWT check
+//            return;
+//        }
+
+        System.out.println("Processing request with JWT filter");
+
         String token = request.getHeader("Authorization");
         if (token != null && token.startsWith("Bearer ")) {
             token = token.substring(7);
