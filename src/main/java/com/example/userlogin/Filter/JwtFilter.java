@@ -1,5 +1,6 @@
-package com.example.userlogin.service;
+package com.example.userlogin.Filter;
 
+import com.example.userlogin.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

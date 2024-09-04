@@ -1,33 +1,58 @@
 package com.example.userlogin.service;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.example.userlogin.Repository.UserRepository;
+import com.example.userlogin.model.User;
+import com.example.userlogin.util.PasswordUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class UserService {
 
-    // 模拟用户存储
-    private final Map<String, String> userDatabase = new HashMap<>();
+    private final UserRepository userRepository;
 
-    // BCryptPasswordEncoder 用于密码的加密和匹配
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
-    public UserService() {
-        // 假设的用户和加密的密码
-        userDatabase.put("1", passwordEncoder.encode("1"));
-        userDatabase.put("user2", passwordEncoder.encode("mypassword"));
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    public boolean authenticate(String username, String password) {
-        // 从数据库获取存储的密码
-        String storedPassword = userDatabase.get(username);
-        if (storedPassword != null) {
-            // 验证密码
-            return passwordEncoder.matches(password, storedPassword);
+    //创建用户类
+    @Transactional
+    public User createUser(String username, String password) {
+        if (userRepository.findByUsername(username).isPresent()) {
+            throw new IllegalArgumentException("用户名已存在");
         }
-        return false;
+
+        String salt = PasswordUtils.generateSalt();
+        String hashedPassword = PasswordUtils.hashPassword(password, salt);
+
+
+        User user = new User(username, hashedPassword, salt);
+
+
+        return userRepository.save(user);
+    }
+
+    //找用户名
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+
+    //校验登入
+    public boolean verifyUserPassword(String username, String password) {
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        if (userOptional.isEmpty()) {
+            return false;
+        }
+
+        User user = userOptional.get();
+        //计算输入密码的哈希值，结合用户的盐值
+        String hashedPassword = PasswordUtils.hashPassword(password, user.getSalt());
+        //将计算出的哈希密码与存储在用户记录中的哈希密码进行比较
+        return hashedPassword.equals(user.getHashedPassword());
     }
 }

@@ -1,5 +1,6 @@
 package com.example.userlogin.service;
 
+import com.example.userlogin.Filter.JwtFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,6 +32,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // 不使用token，无须csrf保护，禁用 CSRF 保护
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/login").permitAll() // 允许访问 /login路径下的所有请求，无需认证
+                        .requestMatchers("/create").permitAll() // 允许访问 /create路径下的所有请求，无需认证
                         .anyRequest().authenticated() // 其他所有请求必须认证
                 )
                 .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class); // 添加自定义 JWT 过滤器

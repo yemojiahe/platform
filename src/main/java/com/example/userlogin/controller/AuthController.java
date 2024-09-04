@@ -5,9 +5,8 @@
 //9.4实现
 
 package com.example.userlogin.controller;
+import com.example.userlogin.util.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.example.userlogin.service.JwtUtil;
-import com.example.userlogin.model.LoginRequest;
 import com.example.userlogin.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,27 +17,41 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
 
-    @Autowired
     private UserService userService;
 
+    @Autowired
+    public void UserController(UserService userService) {
+        this.userService = userService;
+    }
 
-    @PostMapping("/login")
-    //接收用户名和密码
-    public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password) {
-
-
-        // 验证用户名和密码
-        if (userService.authenticate(username, password)) {
-            // 生成 JWT token
-            String token = JwtUtil.generateToken(username);
-            // 返回 token
-            return ResponseEntity.ok(token);
-        } else {
-            // 返回未授权状态
-            System.out.println("1");
-            return ResponseEntity.status(401).body("Invalid credentials");
+    @PostMapping("/create")
+    public ResponseEntity<String> createUser(@RequestParam String username, @RequestParam String password) {
+        //首先验证密码强度
+        if (!PasswordUtils.validatePassword(password)) {
+            return ResponseEntity.status(400).body("密码强度不够，密码长度大于8，需包含字符，数字，和标点符号");
+        }
+        try {
+            userService.createUser(username, password);
+            return ResponseEntity.ok("用户创建成功");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> loginUser(@RequestParam String username, @RequestParam String password) {
+        //首先验证密码强度
+        if (!PasswordUtils.validatePassword(password)) {
+            return ResponseEntity.status(400).body("密码强度不够，密码长度大于8，需包含字符，数字，和标点符号");
+        }
+        boolean isValid = userService.verifyUserPassword(username, password);
+        if (isValid) {
+            return ResponseEntity.ok("登录成功");
+        } else {
+            return ResponseEntity.status(401).body("用户名或密码错误");
+        }
+    }
+
 }
 
 

@@ -1,6 +1,6 @@
 // JWT工具类
 
-package com.example.userlogin.service;
+package com.example.userlogin.util;
 
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
