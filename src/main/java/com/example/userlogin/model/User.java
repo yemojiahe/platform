@@ -22,6 +22,9 @@ public class User {
     @Column(nullable = false)
     private String salt;
 
+    // 无参数构造函数,不写就会报错，表明找不到实体user
+    public User() {}
+
     public User(String username, String hashedPassword, String salt) {
         this.username = username;
         this.hashedPassword = hashedPassword;
