@@ -2,9 +2,11 @@
 //利用jpa防止sql注入
 //加盐哈希防止彩虹表攻击
 //jwt鉴权身份认证
+//后期需要换成json的数据格式返回
 //9.4实现
 
 package com.example.userlogin.controller;
+import com.example.userlogin.util.JwtUtil;
 import com.example.userlogin.util.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.userlogin.service.UserService;
@@ -46,7 +48,10 @@ public class AuthController {
         }
         boolean isValid = userService.verifyUserPassword(username, password);
         if (isValid) {
-            return ResponseEntity.ok("登录成功");
+            String token = JwtUtil.generateToken(username);
+            // 返回 token
+
+            return ResponseEntity.ok("登录成功"+token);
         } else {
             return ResponseEntity.status(401).body("用户名或密码错误");
         }
