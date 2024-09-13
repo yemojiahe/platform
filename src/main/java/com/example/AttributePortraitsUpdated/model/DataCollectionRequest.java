@@ -1,4 +1,4 @@
-package com.example.boot_demo.model;
+package com.example.AttributePortraitsUpdated.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class DataCollectionRequest {

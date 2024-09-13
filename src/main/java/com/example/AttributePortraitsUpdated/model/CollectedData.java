@@ -1,4 +1,4 @@
-package com.example.boot_demo.model;
+package com.example.AttributePortraitsUpdated.model;
 
 public class CollectedData {
     private String EdgeServerId; // 边缘服务器id

@@ -2,9 +2,11 @@ package com.example.Queryprocessing.QueryModel;
 //支持包含多个结构相同的对象和多个额外的字段的json的model
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Map;
 
-public class ClientRequestData {
+public class ClientRequestData  {
 
     @JsonProperty("secondaryProcessingMethod")
     private String secondaryProcessingMethod;

@@ -1,14 +1,13 @@
 
 //属性画像更新模块的控制器
 
-package com.example.boot_demo.controller;
+package com.example.AttributePortraitsUpdated.controller;
 
 
-import com.example.boot_demo.model.CollectedData;
-import com.example.boot_demo.model.DataCollectionRequest;
+import com.example.AttributePortraitsUpdated.model.DataCollectionRequest;
 
-import com.example.boot_demo.service.AttributeUpdateService;
-import com.example.boot_demo.service.DictionaryUpdateService;
+import com.example.AttributePortraitsUpdated.service.AttributeUpdateService;
+import com.example.AttributePortraitsUpdated.service.DictionaryUpdateService;
 
 
 import com.example.dictionary.model.Attribute;

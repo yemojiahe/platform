@@ -24,9 +24,9 @@ public class AttributeService {
         return attributeRepository.findAll();
     }
 
-    public List<String> getAttributeNames() {
-        return attributeRepository.findAll().stream()
-                .map(Attribute::getName)
-                .toList();
-    }
+//    public List<String> getAttributeNames() {
+//        return attributeRepository.findAll().stream()
+//                .map(Attribute::getName)
+//                .toList();
+//    }
 }

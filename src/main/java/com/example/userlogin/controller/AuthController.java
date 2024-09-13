@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+
 @Controller
 @RequestMapping("/")
 public class AuthController {
@@ -49,7 +50,6 @@ public class AuthController {
         boolean isValid = userService.verifyUserPassword(username, password);
         if (isValid) {
             String token = JwtUtil.generateToken(username);
-            // 返回 token
 
             return ResponseEntity.ok("登录成功"+token);
         } else {
