@@ -1,4 +1,5 @@
 package com.example.Queryprocessing.service;
+import com.example.Queryprocessing.QueryModel.ServerResponseData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.example.CommonService.MessagingService;
@@ -9,7 +10,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
+import java.util.*;
 
 
 @Service
@@ -21,7 +22,7 @@ public class ForwardService {
     // forwardservice.crowdCategoriesQuery()
     private final MessagingService messagingService;
     //text
-    public String process_msg;
+    private String process_msg;
     public ClientRequestData requestData;
 
     @Autowired
@@ -30,18 +31,39 @@ public class ForwardService {
     }
 
 
-    //将特征人群转发给特征用户统计模块
-    public void crowdCategoriesQueryToQueue(ClientRequestData requestData) {
-        // 发送消息到 RabbitMQ
+    /**
+     * 将特征人群转发给特征用户统计模块
+     * 将str类传值给text1队列，从text3接收数据
+     */
+    public ServerResponseData crowdCategoriesQueryToQueue(ClientRequestData requestData) {
+        //初始化返回实例
+        ServerResponseData responseData = new ServerResponseData();
+        Map<String, ServerResponseData.Item> responseItems = new HashMap<>();
+
+        //计算crowdCategories的人数
         Map<String, ClientRequestData.Item> items = requestData.getItems();
-        // 遍历每个 Item
         for (ClientRequestData.Item item : items.values()) {
-            // 获取当前 Item 的 CrowdCategories 字符串
             String crowdCategories = item.getCrowdCategories();
-            System.out.println(crowdCategories);
-            // 处理每个 CrowdCategories 对象
-            messagingService.rabbitTemplate.convertAndSend("交换机", "rk", crowdCategories );
+            //消息发往消息队列
+            messagingService.rabbitTemplate.convertAndSend("交换机", "rk", crowdCategories);
+            //得到每种类别的人数数据
+
+            String crowdCategoriesValue = getProcess_msg();
+            System.out.println("接收到消息:"+crowdCategoriesValue);
+            // 创建并填充新的 Item
+            ServerResponseData.Item responseItem = new ServerResponseData.Item();
+            List<String> response  = new ArrayList<>(Arrays.asList(crowdCategories , crowdCategoriesValue));;
+
+            //不同crowdCategories的人数形成列表
+            responseItem.setCrowdCategories(response);
+
+
+
+            responseItems.put(crowdCategories, responseItem);
         }
+
+        responseData.setItems(responseItems);
+        return responseData;
     }
 
     //将得到ClientRequestData requestData转发给交易数据分析模块
@@ -55,9 +77,6 @@ public class ForwardService {
             System.out.println("错误报警");
             throw new RuntimeException(e);
         }
-//        messagingService.sendMessage(DataToQueue , "rk2");
-//        messagingService.rabbitTemplate.convertAndSend("交换机", "rk2", DataToQueue );
-        // 发送 JSON 数据到 RabbitMQ
         rabbitTemplate.convertAndSend("交换机", "rk2", DataToQueue, message -> {
             message.getMessageProperties().setContentType("application/json");
             message.getMessageProperties().setReplyTo("text2");
@@ -65,10 +84,12 @@ public class ForwardService {
         });
     }
 
+
+    //接收来自特征用户统计模块的消息
     @RabbitListener(queues = "text1")
     public void receiveString(String msg) {
-        System.out.println(msg);
-        process_msg = msg;
+        System.out.println("第一次"+msg);
+        setProcess_msg(msg);
     }
 
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -104,4 +125,11 @@ public class ForwardService {
     }
 
 
+    public String getProcess_msg() {
+        return process_msg;
+    }
+
+    public void setProcess_msg(String process_msg) {
+        this.process_msg = process_msg;
+    }
 }
