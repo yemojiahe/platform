@@ -46,10 +46,28 @@ public class ForwardService {
             String crowdCategories = item.getCrowdCategories();
             //消息发往消息队列
             messagingService.rabbitTemplate.convertAndSend("交换机", "rk", crowdCategories);
-            //得到每种类别的人数数据
 
-            String crowdCategoriesValue = getProcess_msg();
-            System.out.println("接收到消息:"+crowdCategoriesValue);
+
+            //修改避免程序异步爆错
+            String crowdCategoriesValue = null;
+            long startTime = System.currentTimeMillis();
+            long waitTime = 5000; // 5秒
+
+            while (crowdCategoriesValue == null && (System.currentTimeMillis() - startTime) < waitTime) {
+                crowdCategoriesValue = getProcess_msg(); //得到每种类别的人数数据
+                if (crowdCategoriesValue != null) {
+                    System.out.println("接收到消息: " + crowdCategoriesValue);
+                } else {
+                    try {
+                        Thread.sleep(100); // 暂停100毫秒后再检查
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt(); // 处理线程中断
+                    }
+                }
+            }
+
+
+
             // 创建并填充新的 Item
             ServerResponseData.Item responseItem = new ServerResponseData.Item();
             List<String> response  = new ArrayList<>(Arrays.asList(crowdCategories , crowdCategoriesValue));;
