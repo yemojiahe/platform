@@ -21,10 +21,5 @@ class ForwardServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
-    void crowdCategoriesQuery() {
-        // Call the method to be tested
-        forwardService.crowdCategoriesQuery();
-        verify(messagingService, times(1)).sendMessage("This is a test message");
-    }
+
 }

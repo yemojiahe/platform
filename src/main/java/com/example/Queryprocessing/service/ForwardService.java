@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-
 @Service
 public class ForwardService {
 
@@ -101,6 +100,7 @@ public class ForwardService {
             return message;
         });
     }
+
 
 
     //接收来自特征用户统计模块的消息

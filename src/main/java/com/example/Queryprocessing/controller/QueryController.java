@@ -4,6 +4,7 @@ package com.example.Queryprocessing.controller;
 import com.example.CommonService.MessagingService;
 import com.example.Queryprocessing.QueryModel.ClientRequestData;
 import com.example.Queryprocessing.QueryModel.ServerResponseData;
+import com.example.Queryprocessing.QueryModel.UserTransaction;
 import com.example.Queryprocessing.service.ForwardService;
 import com.example.dictionary.model.Attribute;
 import com.example.dictionary.service.AttributeService;
@@ -31,13 +32,12 @@ public class QueryController {
     public  ResponseEntity<ServerResponseData> processClientRequest(@RequestBody ClientRequestData requestData) {
         //初始化返回消息类
         ServerResponseData responseData = new ServerResponseData();
-        //转发给特征用户统计模块得到特征用户
+        //转发给特征用户统计模块得到特征用户得到具有特任人数的response
         responseData = forwardservice.crowdCategoriesQueryToQueue(requestData);
-        //监听到队列结果
+
         //转发给交易数据分析模块
 //        forwardservice.ClientRequestDataToQueue(requestData);
-        String data = forwardservice.getProcess_msg();
-        System.out.println("controller接到消息了"+data);
+
         return ResponseEntity.ok(responseData);
     }
 //    public ServerResponseData crowdCategoriesQueryToQueue(ClientRequestData requestData) {
@@ -73,7 +73,10 @@ public class QueryController {
 
 
 
-    //向前端更新属性字典
+    /**
+     * 向前端更新属性字典
+     * 注意修改企业不能直接存入数据库，需要管理员审核
+     */
     @Autowired
     private AttributeService attributeService;
 
@@ -82,4 +85,5 @@ public class QueryController {
         attributeService.updateAttributes(newAttribute);
         return ResponseEntity.ok("属性修改成功");
     }
+
 }
