@@ -77,13 +77,6 @@ public class QueryController {
      * 向前端更新属性字典
      * 注意修改企业不能直接存入数据库，需要管理员审核
      */
-    @Autowired
-    private AttributeService attributeService;
 
-    @PostMapping("/changeAttribute")
-    public ResponseEntity<String>  changeAttribute(@RequestBody  List<Attribute>  newAttribute) {
-        attributeService.updateAttributes(newAttribute);
-        return ResponseEntity.ok("属性修改成功");
-    }
 
 }

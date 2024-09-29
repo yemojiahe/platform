@@ -1,6 +1,6 @@
 package com.example.datacollectiondemo.DataCollectionModel;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.math.BigInteger;
 
 /*

@@ -2,12 +2,12 @@ package com.example.datacollectiondemo.DataCollectionModel;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
 /*交易数据*/
-@javax.persistence.Entity
+@jakarta.persistence.Entity
 @Table(name="transactions")
 public class Transaction {
 

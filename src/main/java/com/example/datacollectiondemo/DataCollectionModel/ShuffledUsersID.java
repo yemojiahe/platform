@@ -2,13 +2,14 @@ package com.example.datacollectiondemo.DataCollectionModel;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.math.BigInteger;
 
 /*表中只有一列，存已出现的用户id（此id指混淆后系统自动分配的id，一般从1往后分配）*/
-@javax.persistence.Entity
+@jakarta.persistence.Entity
 @Table(name = "shuffled_users_id")
 public class ShuffledUsersID {
 
