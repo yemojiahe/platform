@@ -14,10 +14,9 @@ package com.example.dictionary.model;
 */
 
 import jakarta.persistence.*;
-import org.springframework.data.annotation.Id;
-
+import jakarta.persistence.Id;
 import java.time.LocalDateTime;
-
+@Table(name="audit_log")
 @Entity
 public class AuditLog {
     @Id
@@ -25,14 +24,25 @@ public class AuditLog {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "attribute_id")
+    @JoinColumn(name = "attribute_id",referencedColumnName = "id")
     private Attribute attribute;
 
+    @Column(name = "action")
     private String action; // 增加、修改、删除
+
+    @Column(name = "requested_by")
     private Long requestedBy; // 申请人ID
+
+    @Column(name = "admin_reviewed")
     private Long adminReviewed; // 审核人ID
+
+    @Column(name = "status")
     private Status status; // 审核结果
+
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     public String getAction() {

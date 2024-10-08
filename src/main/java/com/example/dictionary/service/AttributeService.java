@@ -28,14 +28,24 @@ public class AttributeService {
         attribute.setStatus(Status.PENDING); //属性表先存入待审核
         attribute.setCreatedAt(LocalDateTime.now()); //存放修改时间
         attributeRepository.save(attribute);
+        System.out.println("属性表成功存入");
 
-        AuditLog log = new AuditLog(); //审核表
-        log.setAttribute(attribute);
+        AuditLog log = new AuditLog(); // 审核表
+        log.setAttribute(attribute);  // 关联的属性表的外键
+
         log.setAction(action); // 存入操作行为
+
+        /*
+        关于企业表的外键和管理员的外键等内部权限控制完成后将其修改为外键
+        */
         log.setRequestedBy(getCurrentUserId()); //存入修改者id
-        log.setStatus(Status.PENDING);
+        log.setAdminReviewed(getCurrentUserId());
+        //enum('PENDING','APPROVED','REJECTED')
+        log.setStatus(Status.PENDING);  // 存入status
         log.setCreatedAt(LocalDateTime.now());
+        System.out.println("程序定位7"+log.toString());
         auditLogRepository.save(log);
+
     }
 
     public void submitForReview(Long id, String action) {

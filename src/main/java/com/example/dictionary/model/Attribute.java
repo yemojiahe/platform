@@ -14,24 +14,32 @@ updated_at (更新时间)
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-
+@Table(name="attributes")
 @Entity
 public class Attribute {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "value")
     private String value;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private Status status; // 审核状态
 
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @Version
-    private Integer version; // 乐观锁版本号
+    private Integer version ; // 乐观锁版本号
 
     public Status getStatus() {
         return status;

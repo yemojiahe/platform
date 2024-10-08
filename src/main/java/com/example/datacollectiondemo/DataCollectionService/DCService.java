@@ -4,7 +4,7 @@ import com.example.datacollectiondemo.DataCollectionModel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 @org.springframework.stereotype.Service
 public class DCService {
